@@ -1,5 +1,5 @@
 # Micro-serviço de Chat com LLM
-Este projeto implementa um micro-serviço robusto para interagir com Large Language Models (LLMs), persistindo as interações em um banco de dados para análises futuras. O serviço foi projetado com foco em qualidade, segurança, resiliência e performance.
+Este projeto implementa um micro-serviço para interagir com Large Language Models (LLMs), persistindo as interações em um banco de dados para análises futuras. Este serviço segue os princípios do Clean Archictecture.
 
 ## Funcionalidades
 - Recebimento de Prompts: Aceita requisições HTTP POST contendo prompts de usuários.
