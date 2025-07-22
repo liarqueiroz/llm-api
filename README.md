@@ -83,7 +83,9 @@ O serviço estará disponível em http://localhost:8080.
 
 Um desenho de arquitetura está incluído neste repositório, em um diretório docs/architecture. Este diagrama ilustra uma possível arquitetura para o micro-serviço na AWS, bem como suas interações com a LLM e o banco de dados, e envia dados pra uma plataforma de observabilidade.
 
-Em termos de escalabilidade, os recursos escolhidos - AWS Lambda, AWS API Gateway - escalam de maneira automática dependendo da carga. Se a latência for um problema, podemos desacoplar a persistência dos dados da requisição e usar uma fila para que os dados sejam processados e salvos em um momento posterior. 
+Em termos de escalabilidade, os recursos escolhidos - AWS Lambda, AWS API Gateway - escalam de maneira automática dependendo da carga. Se a latência for um problema, podemos desacoplar a persistência dos dados da requisição e usar uma fila para que os dados sejam processados e salvos em um momento posterior.
+
+Para implementação local, utilizei FastAPI por ser um framework leve, produtivo e com ótima documentação. Uma adaptação seria necessária para o deployment em uma AWS Lambda.  
 
 ### Justificativa para o Uso do MongoDB
 O MongoDB foi escolhido para este projeto como um banco de dados operacional devido à sua flexibilidade e capacidade de armazenar dados semi-estruturados (documentos JSON), o que é ideal para registrar as interações de chat com LLMs de forma rápida e eficiente.
