@@ -76,39 +76,42 @@ poetry run python -m src.main
 ```
 O serviço estará disponível em http://localhost:8080.
 
-## Justificativa para o Uso do MongoDB
+## Possível arquitetura
+
+### Desenho de Arquitetura
+![Architecture Diagram](docs/architecture/diagram.png)
+
+Um desenho de arquitetura está incluído neste repositório, em um diretório docs/architecture. Este diagrama ilustra uma possível arquitetura para o micro-serviço na AWS, bem como suas interações com a LLM e o banco de dados, e envia dados pra uma plataforma de observabilidade.
+
+Em termos de escalabilidade, os recursos escolhidos - AWS Lambda, AWS API Gateway - escalam de maneira automática dependendo da carga. Se a latência for um problema, podemos desacoplar a persistência dos dados da requisição e usar uma fila para que os dados sejam processados e salvos em um momento posterior. 
+
+### Justificativa para o Uso do MongoDB
 O MongoDB foi escolhido para este projeto como um banco de dados operacional devido à sua flexibilidade e capacidade de armazenar dados semi-estruturados (documentos JSON), o que é ideal para registrar as interações de chat com LLMs de forma rápida e eficiente.
 
 Embora um banco de dados relacional (SQL) como PostgreSQL ou MySQL fosse mais adequado para análises complexas e relatórios (devido à sua estrutura rígida e otimização para consultas analíticas), o MongoDB atende perfeitamente aos requisitos de persistência de dados transacionais e operacionais deste micro-serviço, permitindo um rápido armazenamento e recuperação de cada interação. Para futuras análises de negócios mais aprofundadas, os dados poderiam ser ETL'd para um data warehouse baseado em SQL.
 
-## Desenho de Arquitetura
-Um desenho de arquitetura detalhado (diagramas de componentes, fluxo de dados, etc.) está incluído neste repositório, em um diretório docs/architecture. Este diagrama ilustrará a estrutura do micro-serviço, suas interações com a LLM e o banco de dados, e como ele se encaixa em um ecossistema maior.
+Optei por MongoDB na implementação por sua familiaridade e facilidade de desenvolvimento local. No desenho da arquitetura, usei DynamoDB por ser a solução gerenciada e nativa da AWS com características similares, como modelo de documentos, alta disponibilidade e escalabilidade automática.
 
-## Melhorias Futuras
+### Observabilidade
+Para observabilidade escolhi o DataDog, uma plataforma que coleta de logs, métricas, criação de alertas, e tracing distribuído.
+
+### Falhas de Dependências
+Caso a chamada para o LLM falhe, podemos implementar um retry com backoff ou ainda ter um segundo LLM que pode ser usado caso o primeiro falhe.
+
+Caso a chamada para o banco de dados falhe, além de um retry, podemos criar uma fila para que os dados sejam processados em um momento posterior.
+
+### Melhorias Futuras
 Considerando os pilares de qualidade, segurança, resiliência e performance, as seguintes melhorias podem ser exploradas:
 
-### Qualidade:
-
 - Implementação de testes de integração e end-to-end robustos.
-- Monitoramento de logs e métricas de qualidade das respostas da LLM.
+- Monitoramento de logs e métricas de qualidade das respostas da LLM usando Datadog
 - Validação de esquemas de entrada e saída mais rigorosa.
-
-### Segurança:
-
 - Autenticação e autorização de requisições (e.g., JWT, OAuth2).
-- Sanitização de prompts para prevenir ataques de injeção.
-- Gerenciamento seguro de segredos (chaves de API) usando ferramentas como HashiCorp Vault ou AWS Secrets Manager.
-- Auditoria de acesso aos dados.
-
-### Resiliência:
-
 - Implementação de retries com backoff exponencial para chamadas à LLM.
-- Circuit Breakers para isolar falhas em serviços externos.
+- Implementação de um segundo LLM como fallback.
+- Implementação de uma fila para persistencia dos dados em momento posterior
 - Estratégias de deploy multi-AZ/região para alta disponibilidade.
 
-### Performance:
-
-- Escalabilidade horizontal do micro-serviço.
 
 ## Licença
 Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
