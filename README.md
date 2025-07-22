@@ -54,7 +54,7 @@ cd llm-api
 ```
 Instale as dependências com Poetry:
 ```
-poetry install
+poetry install --no-root
 ```
 Configure as variáveis de ambiente:
 Crie um arquivo .env na raiz do projeto e adicione sua chave de API da Gemini (ou OpenRouter):
