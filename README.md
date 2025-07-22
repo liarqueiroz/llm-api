@@ -33,7 +33,7 @@ Retorno Esperado (Exemplo):
 }
 ```
 ## Tecnologias Utilizadas
-- Linguagem de Programação: Python (ou linguagem de sua preferência)
+- Linguagem de Programação: Python
 - Gerenciamento de Dependências: Poetry
 - Banco de Dados: MongoDB (via Docker Compose)
 - Large Language Models (LLMs): Google Gemini 
@@ -88,7 +88,7 @@ Em termos de escalabilidade, os recursos escolhidos - AWS Lambda, AWS API Gatewa
 ### Justificativa para o Uso do MongoDB
 O MongoDB foi escolhido para este projeto como um banco de dados operacional devido à sua flexibilidade e capacidade de armazenar dados semi-estruturados (documentos JSON), o que é ideal para registrar as interações de chat com LLMs de forma rápida e eficiente.
 
-Embora um banco de dados relacional (SQL) como PostgreSQL ou MySQL fosse mais adequado para análises complexas e relatórios (devido à sua estrutura rígida e otimização para consultas analíticas), o MongoDB atende perfeitamente aos requisitos de persistência de dados transacionais e operacionais deste micro-serviço, permitindo um rápido armazenamento e recuperação de cada interação. Para futuras análises de negócios mais aprofundadas, os dados poderiam ser ETL'd para um data warehouse baseado em SQL.
+Embora um banco de dados relacional (SQL) como PostgreSQL ou MySQL fosse mais adequado para análises complexas e relatórios (devido à sua estrutura rígida e otimização para consultas analíticas), o MongoDB atende perfeitamente aos requisitos de persistência de dados transacionais e operacionais deste micro-serviço, permitindo um rápido armazenamento e recuperação de cada interação. Para futuras análises de negócios mais aprofundadas, os dados poderiam ser movidos para um data warehouse baseado em SQL.
 
 Optei por MongoDB na implementação por sua familiaridade e facilidade de desenvolvimento local. No desenho da arquitetura, usei DynamoDB por ser a solução gerenciada e nativa da AWS com características similares, como modelo de documentos, alta disponibilidade e escalabilidade automática.
 
